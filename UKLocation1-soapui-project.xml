@@ -445,6 +445,16 @@ log.info(slurperResponse)
 
 //fetch  the specific Town("Clifton")
 def uKTown=slurperResponse.Table.Town[0]  
+//def people = new XmlParser().parseText(stringXML)
+   //     xmlResponse.Table.findAll { t->
+    //        t.town[0].text() =="Clifton"
+      //  }.each { t ->
+         //   println "Cliftonww."
+        //}
+
+
+
+
 log.info(uKTown)
 
 //to save the result(Town)at project level
