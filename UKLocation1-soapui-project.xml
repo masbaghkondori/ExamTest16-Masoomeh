@@ -450,69 +450,28 @@ log.info(uKTown)
 //to save the result(Town)at project level
 testRunner.testCase.testSuite.project.setPropertyValue("UKTown ", uKTown.toString())
 
-</script></con:config></con:testStep><con:testStep type="groovy" name="GroovyGrund" id="ae8aa5d8-04a2-407a-9e37-5b45ca026201" disabled="true"><con:settings/><con:config><script><![CDATA[import groovy.util.XmlSlurper
-//saving the whole response
+</script></con:config></con:testStep><con:testStep type="groovy" name="GroovyGrund" id="ae8aa5d8-04a2-407a-9e37-5b45ca026201" disabled="true"><con:settings/><con:config><script>import groovy.util.XmlSlurper
 
+//Fetch and saving the whole response 
 def responseContent=testRunner.testCase.getTestStepByName("GetUKLocationByPostCode").getPropertyValue("response")
 log.info(responseContent)
 
-//change the response to a table
+//parse to change the response to a table
 def xmlResponse = new XmlSlurper().parseText(responseContent)
 log.info(xmlResponse)
 
-//to avoid <GetAirportInformationByCountryResult><![CDATA[<NewDataSet> and all tags
+//to avoid &lt;GetUKLocationByPostCodeResult>&lt;![CDATA[&lt;NewDataSet> and all tags
 def slurperResponse=new XmlSlurper().parseText(xmlResponse.Body.GetUKLocationByPostCodeResponse.GetUKLocationByPostCodeResult.toString())
-
 log.info(slurperResponse)
 
-//to get the specific Town  name(Sweden)
-//def uKTown=slurperResponse.Table.Town[0]
-def uKTown="Clifton"
-//def envelope = new XmlSlurper().parseText(messageExchange.responseContentAsXml)
-//def  uKTown= 'Clifton'
-
-xmlResponse.'**'
- 
-        .findAll { it.assetTown.text().contains(uKTown) }
-        .each {
-            println it.assetId.text()
-        }
-
-
-
-
-//to save the result(Town)at project level  
+//fetch  the specific Town("Clifton")
+def uKTown=slurperResponse.Table.Town[0]  
 log.info(uKTown)
 
+//to save the result(Town)at project level
 testRunner.testCase.testSuite.project.setPropertyValue("UKTown ", uKTown.toString())
 
-
-
-
-import groovy.util.XmlSlurper
-//saving the whole response
-
-def responseContent=testRunner.testCase.getTestStepByName("GetUKLocationByPostCode").getPropertyValue("response")
-log.info(responseContent)
-
-//change the response to a table
-def xmlResponse = new XmlSlurper().parseText(responseContent)
-log.info(xmlResponse)
-
-//to avoid <GetAirportInformationByCountryResult><![CDATA[<NewDataSet> and all tags
-def slurperResponse=new XmlSlurper().parseText(xmlResponse.Body.GetUKLocationByPostCodeResponse.GetUKLocationByPostCodeResult.toString())
-
-log.info(slurperResponse)
-
-//to get the specific Town  name(Sweden)
-def uKTown=slurperResponse.Table.Town[0]
-
-//to save the result(Town)at project level  
-log.info(uKTown)
-
-testRunner.testCase.testSuite.project.setPropertyValue("UKTown ", uKTown.toString())
-
-]]></script></con:config></con:testStep><con:testStep type="request" name="GetUKLocationByTown" id="c0f363bf-8971-4d29-8316-72b9698ba17b"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>UKLocationSoap</con:interface><con:operation>GetUKLocationByTown</con:operation><con:request name="GetUKLocationByTown" id="dd08cd1c-cd8c-46eb-b1ab-eaa0b3673c9f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://www.webservicex.net/uklocation.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET">\r
+</script></con:config></con:testStep><con:testStep type="request" name="GetUKLocationByTown" id="c0f363bf-8971-4d29-8316-72b9698ba17b"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>UKLocationSoap</con:interface><con:operation>GetUKLocationByTown</con:operation><con:request name="GetUKLocationByTown" id="dd08cd1c-cd8c-46eb-b1ab-eaa0b3673c9f"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://www.webservicex.net/uklocation.asmx</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://www.webserviceX.NET">\r
 <soapenv:Header/>
    <soapenv:Body>
       <web:GetUKLocationByTown>
